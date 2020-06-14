@@ -2,6 +2,7 @@ package com.learn.springmvcrest.services;
 
 import com.learn.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.learn.springmvcrest.api.v1.model.CustomerDTO;
+import com.learn.springmvcrest.model.Customer;
 import com.learn.springmvcrest.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,15 @@ public class CustomerServiceImpl implements CustomerService{
                     
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        return customerMapper.customerToCustomerDTO(savedCustomer);
     }
 }

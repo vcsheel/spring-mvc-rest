@@ -5,6 +5,7 @@ import com.learn.springmvcrest.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,14 +18,16 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class CustomerControllerTest {
+class CustomerControllerTest extends AbstractRestControllerTest {
 
     @Mock
     CustomerService customerService;
@@ -60,6 +63,21 @@ class CustomerControllerTest {
 
         mockMvc.perform(get("/api/v1/customers/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo("Rob")));
+    }
+
+    @Test
+    void createNewCustomer() throws Exception {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Rob");
+        customerDTO.setId(1L);
+
+        when(customerService.createCustomer(any())).thenReturn(customerDTO);
+
+        mockMvc.perform(post("/api/v1/customers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJSONString(customerDTO)))
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", equalTo("Rob")));
     }
 }

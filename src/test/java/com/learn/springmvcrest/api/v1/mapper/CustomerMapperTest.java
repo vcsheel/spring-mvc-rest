@@ -2,11 +2,9 @@ package com.learn.springmvcrest.api.v1.mapper;
 
 import com.learn.springmvcrest.api.v1.model.CustomerDTO;
 import com.learn.springmvcrest.model.Customer;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 class CustomerMapperTest {
 
@@ -29,5 +27,16 @@ class CustomerMapperTest {
 
         assertEquals(FIRSTNAME, customerDTO.getFirstName());
         assertEquals(ID, customerDTO.getId());
+    }
+
+    @Test
+    void customerDTOToCustomer() {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(ID);
+        customerDTO.setFirstName(FIRSTNAME);
+
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+
+        assertEquals(ID, customer.getId());
     }
 }
