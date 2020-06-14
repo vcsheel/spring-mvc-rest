@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService{
                     customerDTO.setCustomUrl(API_V1_CUSTOMERS + customerDTO.getId());
                     return customerDTO;
                 })
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class CustomerServiceImpl implements CustomerService{
 
                     return saveAndReturnDTO(customer);
                 })
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
