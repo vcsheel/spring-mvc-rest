@@ -2,8 +2,10 @@ package com.learn.springmvcrest.bootstrap;
 
 import com.learn.springmvcrest.model.Category;
 import com.learn.springmvcrest.model.Customer;
+import com.learn.springmvcrest.model.Vendor;
 import com.learn.springmvcrest.repository.CategoryRepository;
 import com.learn.springmvcrest.repository.CustomerRepository;
+import com.learn.springmvcrest.repository.VendorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,10 +16,12 @@ public class Bootstrap implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
     private final CustomerRepository customerRepository;
+    private final VendorRepository vendorRepository;
 
-    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+    public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
         this.categoryRepository = categoryRepository;
         this.customerRepository = customerRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Override
@@ -25,6 +29,7 @@ public class Bootstrap implements CommandLineRunner {
 
         loadCategories();
         loadCustomers();
+        loadVendors();
     }
 
     private void loadCustomers() {
@@ -70,5 +75,18 @@ public class Bootstrap implements CommandLineRunner {
         categoryRepository.save(dried);
 
         log.info("Category Data loaded : " + categoryRepository.count());
+    }
+
+    private void loadVendors() {
+        Vendor vendor = new Vendor();
+        vendor.setName("Vendor1");
+
+        Vendor vendor1 = new Vendor();
+        vendor1.setName("Vendor2");
+
+        vendorRepository.save(vendor);
+        vendorRepository.save(vendor1);
+
+        log.info("Vendor data loaded: " + vendorRepository.count());
     }
 }
