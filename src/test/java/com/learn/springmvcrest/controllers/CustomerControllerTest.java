@@ -5,7 +5,6 @@ import com.learn.springmvcrest.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -48,7 +47,9 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
         when(customerService.getAllCustomers()).thenReturn(customerDTOS);
 
-        mockMvc.perform(get("/api/v1/customers/").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/customers/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customers", hasSize(2)));
     }
@@ -61,7 +62,9 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
         when(customerService.findById(anyLong())).thenReturn(customerDTO);
 
-        mockMvc.perform(get("/api/v1/customers/1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/customers/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Rob")));
     }
@@ -75,6 +78,7 @@ class CustomerControllerTest extends AbstractRestControllerTest {
         when(customerService.createCustomer(any())).thenReturn(customerDTO);
 
         mockMvc.perform(post("/api/v1/customers")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJSONString(customerDTO)))
                 .andExpect(status().isCreated())
