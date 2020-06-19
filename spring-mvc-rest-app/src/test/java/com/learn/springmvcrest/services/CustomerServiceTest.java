@@ -1,7 +1,7 @@
 package com.learn.springmvcrest.services;
 
+import com.learn.model.CustomerDTO;
 import com.learn.springmvcrest.api.v1.mapper.CustomerMapper;
-import com.learn.springmvcrest.api.v1.model.CustomerDTO;
 import com.learn.springmvcrest.model.Customer;
 import com.learn.springmvcrest.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package com.learn.springmvcrest.services;
 
+import com.learn.model.CustomerDTO;
 import com.learn.springmvcrest.api.v1.mapper.CustomerMapper;
-import com.learn.springmvcrest.api.v1.model.CustomerDTO;
 import com.learn.springmvcrest.model.Customer;
 import com.learn.springmvcrest.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
                 .map(customerDTO -> {
-                    customerDTO.setCustomUrl(API_V1_CUSTOMERS + customerDTO.getId());
+                    customerDTO.setCustomerUrl(API_V1_CUSTOMERS + id);
                     return customerDTO;
                 })
                 .orElseThrow(ResourceNotFoundException::new);
@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService{
                 .map(customer -> {
                     
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomUrl(API_V1_CUSTOMERS + customer.getId());
+                    customerDTO.setCustomerUrl(API_V1_CUSTOMERS + customer.getId());
                     return customerDTO;
                     
                 })
@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService{
         Customer savedCustomer = customerRepository.save(customer);
 
         CustomerDTO returnCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-        returnCustomerDTO.setCustomUrl(API_V1_CUSTOMERS + savedCustomer.getId());
+        returnCustomerDTO.setCustomerUrl(API_V1_CUSTOMERS + savedCustomer.getId());
 
         return returnCustomerDTO;
     }

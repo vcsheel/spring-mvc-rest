@@ -1,6 +1,6 @@
 package com.learn.springmvcrest.controllers;
 
-import com.learn.springmvcrest.api.v1.model.CustomerDTO;
+import com.learn.model.CustomerDTO;
 import com.learn.springmvcrest.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,6 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     void getCustomerById() throws Exception {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName("Rob");
-        customerDTO.setId(1L);
 
         when(customerService.findById(anyLong())).thenReturn(customerDTO);
 
@@ -73,7 +72,6 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     void createNewCustomer() throws Exception {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstName("Rob");
-        customerDTO.setId(1L);
 
         when(customerService.createCustomer(any())).thenReturn(customerDTO);
 

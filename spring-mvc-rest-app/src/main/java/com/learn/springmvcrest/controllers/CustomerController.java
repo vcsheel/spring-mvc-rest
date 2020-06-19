@@ -1,7 +1,8 @@
 package com.learn.springmvcrest.controllers;
 
-import com.learn.springmvcrest.api.v1.model.CustomerDTO;
-import com.learn.springmvcrest.api.v1.model.CustomerListDTO;
+
+import com.learn.model.CustomerDTO;
+import com.learn.model.CustomerListDTO;
 import com.learn.springmvcrest.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,8 +25,11 @@ public class CustomerController {
     @ApiOperation(value = "Gets all the customer", notes = "This is a GET call")
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers () {
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+
         return new ResponseEntity<CustomerListDTO>(
-                new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK
+                customerListDTO, HttpStatus.OK
         );
     }
 

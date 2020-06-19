@@ -1,6 +1,7 @@
 package com.learn.springmvcrest.services;
 
-import com.learn.springmvcrest.api.v1.model.CustomerDTO;
+
+import com.learn.model.CustomerDTO;
 
 import java.util.List;
 
